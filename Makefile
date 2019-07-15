@@ -35,16 +35,16 @@ ocdconsole:
 	telnet 127.0.0.1 4444
 
 gdb:
-	$(GDB) -ex "target extended-remote :3333"
+	$(GDB) -ex "target extended-remote :3333" cm0test
 
 reset:
-	echo "halt; reset" | nc -N 127.0.0.1 4444
+	echo "reset halt; continue" | nc -N 127.0.0.1 4444
 
 bindump:
-	echo "halt; dump_image flash.bin 0x8000000 0x8000" | nc -N 127.0.0.1 4444
+	echo "reset halt; dump_image flash.bin 0x8000000 0x8000" | nc -N 127.0.0.1 4444
 
 program: cm0test.bin
-	echo "halt; program cm0test.bin 0x8000000 reset" | nc -N 127.0.0.1 4444
+	echo "reset halt; program cm0test.bin 0x8000000 reset" | nc -N 127.0.0.1 4444
 
 cm0test: $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(STATICLIBS)
