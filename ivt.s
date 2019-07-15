@@ -168,8 +168,6 @@ vectors:
 	.word	0		// 0xb8: Reserved
 	.word	USB_Handler		// 0xbc
 
-	.weak	Reset_Handler
-	.thumb_set	Reset_Handler, Default_Handler
 	.weak	NMI_Handler
 	.thumb_set	NMI_Handler, Default_Handler
 	.weak	HardFault_Handler

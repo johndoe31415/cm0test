@@ -48,7 +48,7 @@ for offset in range(4, last_offset, 4):
 		print("	.word	%s_Handler		// %#x" % (handler, offset))
 print()
 
-for offset in range(4, last_offset, 4):
+for offset in range(8, last_offset, 4):
 	handler = handlers.get(offset)
 	if handler is not None:
 		print("	.weak	%s_Handler" % (handler))
