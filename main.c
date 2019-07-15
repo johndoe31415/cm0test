@@ -11,7 +11,5 @@ void SystemInit(void) {
 
 int main(void) {
 	while (true) {
-		volatile uint32_t *x = (volatile uint32_t*)0x12345678;
-		*x = (*x) + 0xabcdef12;
 	}
 }

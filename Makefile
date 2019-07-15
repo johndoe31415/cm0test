@@ -1,5 +1,4 @@
-.PHONY: all clean readflash program bindump gdb gdbserver console tests
-.SUFFIXES: .txt
+.PHONY: all clean openocd ocdconsole gdb reset bindump program 
 
 TARGETS := cm0test cm0test.bin
 
@@ -27,23 +26,25 @@ all: $(TARGETS)
 
 clean:
 	rm -f $(OBJS) $(TARGETS)
-	rm -f cm0test.sym
+	rm -f cm0test.sym flash.bin
+
+openocd:
+	openocd -f interface/jlink.cfg -c 'transport select swd' -f target/stm32f0x.cfg
+
+ocdconsole:
+	telnet 127.0.0.1 4444
 
 gdb:
-	$(GDB) -d ext-st -d cube cm0test -ex "py import sys; sys.path.insert(0, '.'); import cm4gdb" -ex "target extended-remote :4242"
-
-console:
-	picocom --baud 115200 /dev/ttyUSB*
+	$(GDB) -ex "target extended-remote :3333"
 
 reset:
-	$(STFLASH) reset
+	echo "halt; reset" | nc -N 127.0.0.1 4444
+
+bindump:
+	echo "halt; dump_image flash.bin 0x8000000 0x8000" | nc -N 127.0.0.1 4444
 
 program: cm0test.bin
-	-killall st-util
-	$(STFLASH) --reset write $< $(WRITE_ADDR)
-
-bindump: cm0test.bin
-	$(OBJDUMP) -b binary -m armv3m -D $<
+	echo "halt; program cm0test.bin 0x8000000 reset" | nc -N 127.0.0.1 4444
 
 cm0test: $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(STATICLIBS)
