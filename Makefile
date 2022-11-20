@@ -46,6 +46,9 @@ stlink-read:
 stlink-pgm: cm0test.bin
 	st-flash write cm0test.bin 0x8000000
 
+stlink-pgm-res: cm0test.bin
+	st-flash --connect-under-reset write cm0test.bin 0x8000000
+
 ocdconsole:
 	telnet 127.0.0.1 4444
 

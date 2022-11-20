@@ -33,23 +33,23 @@ void default_fault_handler(void) {
 void EarlySystemInit(void) {
 	/* VCO must be between 64..344 MHz, fVCO = fIN * N / M */
 	/* Set PLL N = 8, M = 1, fVCO = 128 MHz */
-#if 0
-	RCC->PLLCFGR = (8 << RCC_PLLCFGR_PLLN_Pos) | RCC_PLLCFGR_PLLSRC_HSI;
+	/* Set PLLR divider to 1/2, so that SYSCLK = 64 MHz */
+	RCC->PLLCFGR = (8 << RCC_PLLCFGR_PLLN_Pos) | RCC_PLLCFGR_PLLREN | (1 << RCC_PLLCFGR_PLLR_Pos) | RCC_PLLCFGR_PLLSRC_HSI;
 
 	/* Enable PLL */
 	RCC->CR |= RCC_CR_PLLON;
-	RCC->CR |= (1 << RCC_CR_HSIDIV_Pos);
 
 	/* Wait for PLL to become ready */
 	while (!(RCC->CR & RCC_CR_PLLRDY));
+
+	/* Adjust FLASH to 2 waitstates (3 HCLK cycles), since >48 MHz */
+	FLASH->ACR |= 2 << FLASH_ACR_LATENCY_Pos;
 
 	/* Switch clock source to PLL */
 	RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_SW) | RCC_SYSCLKSOURCE_PLLCLK;
 
 	/* Wait for PLL to become active */
 	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_SYSCLKSOURCE_STATUS_PLLCLK);
-#endif
-	/* sysclk = pllr*/
 }
 
 static void init_gpio(void) {
