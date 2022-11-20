@@ -21,10 +21,10 @@ CFLAGS += -Os -g3
 CFLAGS += -mcpu=cortex-m0 -mthumb
 CFLAGS += -ffunction-sections -fdata-sections
 #CFLAGS += -include stdperiph/configuration.h -Istdperiph/include -Istdperiph/system -Istdperiph/cmsis
-CFLAGS += -DSTM32G031xx -I cube/include -Icube/system -Icube/cmsis
+CFLAGS += -DSTM32G031xx -I cube/include -Icube/system -Icube/cmsis -Icube
 LDFLAGS := -T$(LDSCRIPT)
 WRITE_ADDR := 0x08000000
-LDFLAGS += -Wl,--gc-sections -nostdlib
+LDFLAGS += -Wl,--gc-sections
 
 OBJS := main.o system.o ivt.o
 

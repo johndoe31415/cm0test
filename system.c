@@ -30,31 +30,30 @@ void default_fault_handler(void) {
 	while (true);
 }
 
-static void clock_switch_hsi_pll(void) {
+void EarlySystemInit(void) {
+	/* VCO must be between 64..344 MHz, fVCO = fIN * N / M */
+	/* Set PLL N = 8, M = 1, fVCO = 128 MHz */
 #if 0
-	/* Set PLL multipler to x6 (8 MHz HSI * 6 = 48 MHz) */
-	RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_PLLMUL) | RCC_CFGR_PLLMUL6;
+	RCC->PLLCFGR = (8 << RCC_PLLCFGR_PLLN_Pos) | RCC_PLLCFGR_PLLSRC_HSI;
 
 	/* Enable PLL */
 	RCC->CR |= RCC_CR_PLLON;
+	RCC->CR |= (1 << RCC_CR_HSIDIV_Pos);
 
 	/* Wait for PLL to become ready */
 	while (!(RCC->CR & RCC_CR_PLLRDY));
 
 	/* Switch clock source to PLL */
-	RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_SW) | RCC_CFGR_SW_PLL;
+	RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_SW) | RCC_SYSCLKSOURCE_PLLCLK;
 
 	/* Wait for PLL to become active */
-	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
+	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_SYSCLKSOURCE_STATUS_PLLCLK);
 #endif
-}
-
-void EarlySystemInit(void) {
-	clock_switch_hsi_pll();
+	/* sysclk = pllr*/
 }
 
 static void init_gpio(void) {
-//	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 	GPIO_InitTypeDef gpio_init_struct = {
 			.Pin = GPIO_PIN_12,
 			.Mode = GPIO_MODE_OUTPUT_PP,
