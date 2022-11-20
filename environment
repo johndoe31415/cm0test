@@ -1,3 +1,3 @@
-export PATH="${HOME}/bin/gcc/arm-cm0-bare/bin:`pwd`/../tools:${PATH}"
-export LD_LIBRARY_PATH="${HOME}/bin/gcc-cm0-bare/lib"
 export PS1="(cm0) ${PS1}"
+export LD_LIBRARY_PATH="/home/joe/bin/gcc/arm-cm0/lib"
+export PATH="/home/joe/bin/gcc/arm-cm0/bin:${PATH}"

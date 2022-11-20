@@ -1,4 +1,4 @@
-.PHONY: all clean build_spl openocd ocdconsole gdb reset flashdump program
+.PHONY: all clean build_spl openocd ocdconsole gdb reset flashdump program stlink-read stlink-pgm
 
 TARGETS := cm0test cm0test.bin
 
@@ -9,17 +9,22 @@ OBJDUMP := $(PREFIX)objdump
 AR := $(PREFIX)ar
 GDB := $(PREFIX)gdb
 
+#LDSCRIPT := stm32f030.ld
+#STATICLIBS := stdperiph/stdperiph.a
+
+LDSCRIPT := stm32g031j6m6.ld
+STATICLIBS := cube/stm32cube.a
+
 CFLAGS := $(CFLAGS) -std=c11
 CFLAGS += -Wall -Wmissing-prototypes -Wstrict-prototypes -Werror=implicit-function-declaration -Werror=format -Wimplicit-fallthrough -Wshadow
 CFLAGS += -Os -g3
 CFLAGS += -mcpu=cortex-m0 -mthumb
-#CFLAGS += -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb
 CFLAGS += -ffunction-sections -fdata-sections
-CFLAGS += -include stdperiph/configuration.h -Istdperiph/include -Istdperiph/system -Istdperiph/cmsis
-LDFLAGS := -Tstm32f030.ld
+#CFLAGS += -include stdperiph/configuration.h -Istdperiph/include -Istdperiph/system -Istdperiph/cmsis
+CFLAGS += -DSTM32G031xx -I cube/include -Icube/system -Icube/cmsis
+LDFLAGS := -T$(LDSCRIPT)
 WRITE_ADDR := 0x08000000
 LDFLAGS += -Wl,--gc-sections -nostdlib
-STATICLIBS := stdperiph/stdperiph.a
 
 OBJS := main.o system.o ivt.o
 
@@ -34,6 +39,12 @@ stdperiph:
 
 openocd:
 	openocd -f interface/jlink.cfg -c 'transport select swd' -f target/stm32f0x.cfg
+
+stlink-read:
+	st-flash read flash.bin 0x8000000 32k
+
+stlink-pgm: cm0test.bin
+	st-flash write cm0test.bin 0x8000000
 
 ocdconsole:
 	telnet 127.0.0.1 4444

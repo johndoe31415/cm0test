@@ -1,0 +1,6 @@
+STM32CubeG0
+stm32cube.a
+cmsis
+include
+system
+stm32g0xx_hal_conf.h

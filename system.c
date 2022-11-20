@@ -22,8 +22,8 @@
 **/
 
 #include <stdbool.h>
-#include <stm32f0xx_rcc.h>
-#include <stm32f0xx_gpio.h>
+#include <stm32g0xx_hal_rcc.h>
+#include <stm32g0xx_hal_gpio.h>
 #include "system.h"
 
 void default_fault_handler(void) {
@@ -31,6 +31,7 @@ void default_fault_handler(void) {
 }
 
 static void clock_switch_hsi_pll(void) {
+#if 0
 	/* Set PLL multipler to x6 (8 MHz HSI * 6 = 48 MHz) */
 	RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_PLLMUL) | RCC_CFGR_PLLMUL6;
 
@@ -45,6 +46,7 @@ static void clock_switch_hsi_pll(void) {
 
 	/* Wait for PLL to become active */
 	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
+#endif
 }
 
 void EarlySystemInit(void) {
@@ -52,15 +54,14 @@ void EarlySystemInit(void) {
 }
 
 static void init_gpio(void) {
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+//	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	GPIO_InitTypeDef gpio_init_struct = {
-			.GPIO_Pin = GPIO_Pin_2,
-			.GPIO_Mode = GPIO_Mode_OUT,
-			.GPIO_OType = GPIO_OType_PP,
-			.GPIO_Speed = GPIO_Speed_2MHz,
-			.GPIO_PuPd = GPIO_PuPd_NOPULL,
+			.Pin = GPIO_PIN_12,
+			.Mode = GPIO_MODE_OUTPUT_PP,
+			.Speed = GPIO_SPEED_FREQ_HIGH,
+			.Pull = GPIO_PULLUP,
 	};
-	GPIO_Init(GPIOA, &gpio_init_struct);
+	HAL_GPIO_Init(GPIOA, &gpio_init_struct);
 }
 
 void SystemInit(void) {

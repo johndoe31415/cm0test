@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <stm32f0xx_gpio.h>
+#include <stm32g0xx_hal_gpio.h>
 
 #include "main.h"
 
@@ -34,9 +34,9 @@ static void delay(uint32_t duration) {
 
 int main(void) {
 	while (true) {
-		GPIOA->BSRR = GPIO_Pin_2;
+		GPIOA->BSRR = GPIO_PIN_12;
 		delay(1000000);
-		GPIOA->BRR = GPIO_Pin_2;
-		delay(1000000);
+		GPIOA->BRR = GPIO_PIN_12;
+		delay(2000000);
 	}
 }
