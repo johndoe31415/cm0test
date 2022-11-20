@@ -28,7 +28,7 @@ clean:
 	rm -f cm0test.sym flash.bin
 
 extract:
-	git clone https://github.com/STMicroelectronics/STM32CubeG0
+	-git clone https://github.com/STMicroelectronics/STM32CubeG0
 	rm -f STM32CubeG0/Drivers/STM32G0xx_HAL_Driver/Src/*_template.c
 	ln -s $(SUBDIR)/Drivers/CMSIS/Include cmsis
 	ln -s $(SUBDIR)/Drivers/CMSIS/Device/ST/STM32G0xx/Include system
