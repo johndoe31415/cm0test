@@ -21,22 +21,13 @@
  *	Johannes Bauer <JohannesBauer@gmx.de>
 **/
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stm32f0xx_gpio.h>
+#ifndef __SYSTEM_H__
+#define __SYSTEM_H__
 
-#include "main.h"
+/*************** AUTO GENERATED SECTION FOLLOWS ***************/
+void default_fault_handler(void);
+void EarlySystemInit(void);
+void SystemInit(void);
+/***************  AUTO GENERATED SECTION ENDS   ***************/
 
-static void delay(uint32_t duration) {
-	volatile uint32_t ctr = duration;
-	while (ctr--);
-}
-
-int main(void) {
-	while (true) {
-		GPIOA->BSRR = GPIO_Pin_2;
-		delay(1000000);
-		GPIOA->BRR = GPIO_Pin_2;
-		delay(1000000);
-	}
-}
+#endif

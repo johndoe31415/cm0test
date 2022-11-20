@@ -1,4 +1,4 @@
-.PHONY: all clean openocd ocdconsole gdb reset bindump program 
+.PHONY: all clean build_spl openocd ocdconsole gdb reset flashdump program
 
 TARGETS := cm0test cm0test.bin
 
@@ -15,18 +15,22 @@ CFLAGS += -Os -g3
 CFLAGS += -mcpu=cortex-m0 -mthumb
 #CFLAGS += -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb
 CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -include stdperiph/configuration.h -Istdperiph/include -Istdperiph/system -Istdperiph/cmsis
 LDFLAGS := -Tstm32f030.ld
 WRITE_ADDR := 0x08000000
-LDFLAGS += -Wl,--gc-sections
-STATICLIBS := 
+LDFLAGS += -Wl,--gc-sections -nostdlib
+STATICLIBS := stdperiph/stdperiph.a
 
-OBJS := main.o ivt.o
+OBJS := main.o system.o ivt.o
 
 all: $(TARGETS)
 
 clean:
 	rm -f $(OBJS) $(TARGETS)
 	rm -f cm0test.sym flash.bin
+
+stdperiph:
+	make -C stdperiph
 
 openocd:
 	openocd -f interface/jlink.cfg -c 'transport select swd' -f target/stm32f0x.cfg
@@ -38,9 +42,9 @@ gdb:
 	$(GDB) -ex "target extended-remote :3333" cm0test
 
 reset:
-	echo "reset halt; continue" | nc -N 127.0.0.1 4444
+	echo "reset halt; reset run" | nc -N 127.0.0.1 4444
 
-bindump:
+flashdump:
 	echo "reset halt; dump_image flash.bin 0x8000000 0x8000" | nc -N 127.0.0.1 4444
 
 program: cm0test.bin

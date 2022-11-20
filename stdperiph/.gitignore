@@ -1,0 +1,5 @@
+stdperiph.a
+en.stm32f0_stdperiph_lib.zip
+cmsis
+include
+system

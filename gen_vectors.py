@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #
 #	cm0test - Hello world program for Cortex-M0.
-#	Copyright (C) 2019-2019 Johannes Bauer
+#	Copyright (C) 2019-2022 Johannes Bauer
 #
 #	This file is part of cm0test.
 #
@@ -21,8 +21,12 @@
 #
 #	Johannes Bauer <JohannesBauer@gmx.de>
 
+import sys
+
+vector_filename = sys.argv[1]
+
 handlers = { }
-with open("vectors.txt") as f:
+with open(vector_filename) as f:
 	offset = 4
 	for line in f:
 		line = line.rstrip("\r\n")

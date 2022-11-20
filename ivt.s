@@ -32,14 +32,14 @@
 	# r2: size in bytes, must be >= 0 and divisible by 4
 	#ands r2, #~0x03
 	#cbz r2, _asm_memset_end_\@
-	cmp r2, r2
+	cmp r2, #0
 	beq _asm_memset_end_\@
 	subs r2, #4
 
 	_asm_memset_loop_\@:
 		str r1, [r0, r2]
 		#cbz r2, _asm_memset_end_\@
-		cmp r2, r2
+		cmp r2, #0
 		beq _asm_memset_end_\@
 		subs r2, #4
 	b _asm_memset_loop_\@
@@ -52,7 +52,7 @@
 	# r2: size in bytes, must be >= 0 and divisible by 4
 	#ands r2, #~0x03
 	#cbz r2, _asm_memcpy_end_\@
-	cmp r2, r2
+	cmp r2, #0
 	beq _asm_memcpy_end_\@
 	subs r2, #4
 
@@ -60,7 +60,7 @@
 		ldr r3, [r1, r2]
 		str r3, [r0, r2]
 		#cbz r2, _asm_memcpy_end_\@
-		cmp r2, r2
+		cmp r2, #0
 		beq _asm_memcpy_end_\@
 		subs r2, #4
 	b _asm_memcpy_loop_\@
@@ -76,6 +76,8 @@
 .section .text
 .type Reset_Handler, %function
 Reset_Handler:
+	bl EarlySystemInit
+
 	# Painting of all RAM
 	ldr r0, =_sram
 	ldr r1, =0xdeadbeef
