@@ -1,4 +1,4 @@
-.PHONY: all clean build_spl openocd ocdconsole gdb reset flashdump program stlink-read stlink-pgm
+.PHONY: all clean build_spl openocd ocdconsole gdb reset flashdump program stlink-read stlink-pgm stlink-gdb
 
 TARGETS := cm0test cm0test.bin
 
@@ -48,6 +48,9 @@ stlink-pgm: cm0test.bin
 
 stlink-pgm-res: cm0test.bin
 	st-flash --connect-under-reset write cm0test.bin 0x8000000
+
+stlink-gdb:
+	$(GDB) -ex "target extended-remote :4242" cm0test
 
 ocdconsole:
 	telnet 127.0.0.1 4444

@@ -24,6 +24,9 @@
 #include <stdbool.h>
 #include <stm32g0xx_hal_rcc.h>
 #include <stm32g0xx_hal_gpio.h>
+#include <stm32g0xx_hal_dma.h>
+#include <stm32g0xx_hal_tim.h>
+#include <stm32g0xx_ll_tim.h>
 #include "system.h"
 
 void default_fault_handler(void) {
@@ -54,13 +57,26 @@ void EarlySystemInit(void) {
 
 static void init_gpio(void) {
 	__HAL_RCC_GPIOA_CLK_ENABLE();
-	GPIO_InitTypeDef gpio_init_struct = {
-			.Pin = GPIO_PIN_12,
-			.Mode = GPIO_MODE_OUTPUT_PP,
-			.Speed = GPIO_SPEED_FREQ_HIGH,
-			.Pull = GPIO_PULLUP,
-	};
-	HAL_GPIO_Init(GPIOA, &gpio_init_struct);
+	{
+		GPIO_InitTypeDef gpio_init_struct = {
+				.Pin = GPIO_PIN_12,
+				.Mode = GPIO_MODE_OUTPUT_PP,
+				.Speed = GPIO_SPEED_FREQ_HIGH,
+				.Pull = GPIO_PULLUP,
+		};
+		HAL_GPIO_Init(GPIOA, &gpio_init_struct);
+	}
+
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	{
+		GPIO_InitTypeDef gpio_init_struct = {
+				.Pin = GPIO_PIN_7,
+				.Mode = GPIO_MODE_INPUT,
+				.Speed = GPIO_SPEED_FREQ_HIGH,
+				.Pull = GPIO_PULLUP,
+		};
+		HAL_GPIO_Init(GPIOB, &gpio_init_struct);
+	}
 }
 
 void SystemInit(void) {

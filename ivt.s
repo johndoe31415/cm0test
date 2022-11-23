@@ -134,41 +134,41 @@ vectors:
 	.word	0		// 0x28: Reserved
 	.word	SVCall_Handler		// 0x2c
 	.word	0		// 0x30: Reserved
-	.word	PendSV_Handler		// 0x34
-	.word	SysTick_Handler		// 0x38
-	.word	WWDG_Handler		// 0x3c
-	.word	0		// 0x40: Reserved
-	.word	RTC_Handler		// 0x44
-	.word	FLASH_Handler		// 0x48
-	.word	RCC_Handler		// 0x4c
-	.word	EXTI0_1_Handler		// 0x50
-	.word	EXTI2_3_Handler		// 0x54
-	.word	EXTI4_15_Handler		// 0x58
-	.word	0		// 0x5c: Reserved
-	.word	DMA_CH1_Handler		// 0x60
-	.word	DMA_CH2_3_Handler		// 0x64
-	.word	DMA_CH4_5_Handler		// 0x68
-	.word	ADC_Handler		// 0x6c
-	.word	TIM1_BRK_UP_TRG_COM_Handler		// 0x70
-	.word	TIM1_CC_Handler		// 0x74
-	.word	0		// 0x78: Reserved
-	.word	TIM3_Handler		// 0x7c
-	.word	TIM6_Handler		// 0x80
-	.word	0		// 0x84: Reserved
-	.word	0		// 0x88: Reserved
+	.word	0		// 0x34: Reserved
+	.word	PendSV_Handler		// 0x38
+	.word	SysTick_Handler		// 0x3c
+	.word	WWDG_Handler		// 0x40
+	.word	PVD_Handler		// 0x44
+	.word	RTC_TAMP_Handler		// 0x48
+	.word	FLASH_Handler		// 0x4c
+	.word	RCC_CRS_Handler		// 0x50
+	.word	EXTI0_1_Handler		// 0x54
+	.word	EXTI2_3_Handler		// 0x58
+	.word	EXTI4_15_Handler		// 0x5c
+	.word	UCPDF1_UCPD2_USB_Handler		// 0x60
+	.word	DMA1_CH1_Handler		// 0x64
+	.word	DMA1_CH2_3_Handler		// 0x68
+	.word	DMA1_CH4_5_DMAMUX_DMA2_CH1_2_3_4_5_Handler		// 0x6c
+	.word	ADC_COMP_Handler		// 0x70
+	.word	TIM1_BRK_UP_TRG_COM_Handler		// 0x74
+	.word	TIM1_CC_Handler		// 0x78
+	.word	TIM2_Handler		// 0x7c
+	.word	TIM3_TIM4_Handler		// 0x80
+	.word	TIM6_DAC_LPTIM1_Handler		// 0x84
+	.word	TIM7_LPTIM2_Handler		// 0x88
 	.word	TIM14_Handler		// 0x8c
 	.word	TIM15_Handler		// 0x90
-	.word	TIM16_Handler		// 0x94
-	.word	TIM17_Handler		// 0x98
+	.word	TIM16_FDCAN_IT0_Handler		// 0x94
+	.word	TIM17_FDCAN_IT1_Handler		// 0x98
 	.word	I2C1_Handler		// 0x9c
-	.word	I2C2_Handler		// 0xa0
+	.word	I2C2_I2C3_Handler		// 0xa0
 	.word	SPI1_Handler		// 0xa4
-	.word	SPI2_Handler		// 0xa8
+	.word	SPI2_SPI3_Handler		// 0xa8
 	.word	USART1_Handler		// 0xac
-	.word	USART2_Handler		// 0xb0
-	.word	USART3_4_5_6_Handler		// 0xb4
-	.word	0		// 0xb8: Reserved
-	.word	USB_Handler		// 0xbc
+	.word	USART2_LPUART2_Handler		// 0xb0
+	.word	USART3_4_5_6_LPUART1_Handler		// 0xb4
+	.word	CEC_Handler		// 0xb8
+	.word	AES_RNG_Handler		// 0xbc
 
 	.weak	NMI_Handler
 	.thumb_set	NMI_Handler, Default_Handler
@@ -182,58 +182,68 @@ vectors:
 	.thumb_set	SysTick_Handler, Default_Handler
 	.weak	WWDG_Handler
 	.thumb_set	WWDG_Handler, Default_Handler
-	.weak	RTC_Handler
-	.thumb_set	RTC_Handler, Default_Handler
+	.weak	PVD_Handler
+	.thumb_set	PVD_Handler, Default_Handler
+	.weak	RTC_TAMP_Handler
+	.thumb_set	RTC_TAMP_Handler, Default_Handler
 	.weak	FLASH_Handler
 	.thumb_set	FLASH_Handler, Default_Handler
-	.weak	RCC_Handler
-	.thumb_set	RCC_Handler, Default_Handler
+	.weak	RCC_CRS_Handler
+	.thumb_set	RCC_CRS_Handler, Default_Handler
 	.weak	EXTI0_1_Handler
 	.thumb_set	EXTI0_1_Handler, Default_Handler
 	.weak	EXTI2_3_Handler
 	.thumb_set	EXTI2_3_Handler, Default_Handler
 	.weak	EXTI4_15_Handler
 	.thumb_set	EXTI4_15_Handler, Default_Handler
-	.weak	DMA_CH1_Handler
-	.thumb_set	DMA_CH1_Handler, Default_Handler
-	.weak	DMA_CH2_3_Handler
-	.thumb_set	DMA_CH2_3_Handler, Default_Handler
-	.weak	DMA_CH4_5_Handler
-	.thumb_set	DMA_CH4_5_Handler, Default_Handler
-	.weak	ADC_Handler
-	.thumb_set	ADC_Handler, Default_Handler
+	.weak	UCPDF1_UCPD2_USB_Handler
+	.thumb_set	UCPDF1_UCPD2_USB_Handler, Default_Handler
+	.weak	DMA1_CH1_Handler
+	.thumb_set	DMA1_CH1_Handler, Default_Handler
+	.weak	DMA1_CH2_3_Handler
+	.thumb_set	DMA1_CH2_3_Handler, Default_Handler
+	.weak	DMA1_CH4_5_DMAMUX_DMA2_CH1_2_3_4_5_Handler
+	.thumb_set	DMA1_CH4_5_DMAMUX_DMA2_CH1_2_3_4_5_Handler, Default_Handler
+	.weak	ADC_COMP_Handler
+	.thumb_set	ADC_COMP_Handler, Default_Handler
 	.weak	TIM1_BRK_UP_TRG_COM_Handler
 	.thumb_set	TIM1_BRK_UP_TRG_COM_Handler, Default_Handler
 	.weak	TIM1_CC_Handler
 	.thumb_set	TIM1_CC_Handler, Default_Handler
-	.weak	TIM3_Handler
-	.thumb_set	TIM3_Handler, Default_Handler
-	.weak	TIM6_Handler
-	.thumb_set	TIM6_Handler, Default_Handler
+	.weak	TIM2_Handler
+	.thumb_set	TIM2_Handler, Default_Handler
+	.weak	TIM3_TIM4_Handler
+	.thumb_set	TIM3_TIM4_Handler, Default_Handler
+	.weak	TIM6_DAC_LPTIM1_Handler
+	.thumb_set	TIM6_DAC_LPTIM1_Handler, Default_Handler
+	.weak	TIM7_LPTIM2_Handler
+	.thumb_set	TIM7_LPTIM2_Handler, Default_Handler
 	.weak	TIM14_Handler
 	.thumb_set	TIM14_Handler, Default_Handler
 	.weak	TIM15_Handler
 	.thumb_set	TIM15_Handler, Default_Handler
-	.weak	TIM16_Handler
-	.thumb_set	TIM16_Handler, Default_Handler
-	.weak	TIM17_Handler
-	.thumb_set	TIM17_Handler, Default_Handler
+	.weak	TIM16_FDCAN_IT0_Handler
+	.thumb_set	TIM16_FDCAN_IT0_Handler, Default_Handler
+	.weak	TIM17_FDCAN_IT1_Handler
+	.thumb_set	TIM17_FDCAN_IT1_Handler, Default_Handler
 	.weak	I2C1_Handler
 	.thumb_set	I2C1_Handler, Default_Handler
-	.weak	I2C2_Handler
-	.thumb_set	I2C2_Handler, Default_Handler
+	.weak	I2C2_I2C3_Handler
+	.thumb_set	I2C2_I2C3_Handler, Default_Handler
 	.weak	SPI1_Handler
 	.thumb_set	SPI1_Handler, Default_Handler
-	.weak	SPI2_Handler
-	.thumb_set	SPI2_Handler, Default_Handler
+	.weak	SPI2_SPI3_Handler
+	.thumb_set	SPI2_SPI3_Handler, Default_Handler
 	.weak	USART1_Handler
 	.thumb_set	USART1_Handler, Default_Handler
-	.weak	USART2_Handler
-	.thumb_set	USART2_Handler, Default_Handler
-	.weak	USART3_4_5_6_Handler
-	.thumb_set	USART3_4_5_6_Handler, Default_Handler
-	.weak	USB_Handler
-	.thumb_set	USB_Handler, Default_Handler
+	.weak	USART2_LPUART2_Handler
+	.thumb_set	USART2_LPUART2_Handler, Default_Handler
+	.weak	USART3_4_5_6_LPUART1_Handler
+	.thumb_set	USART3_4_5_6_LPUART1_Handler, Default_Handler
+	.weak	CEC_Handler
+	.thumb_set	CEC_Handler, Default_Handler
+	.weak	AES_RNG_Handler
+	.thumb_set	AES_RNG_Handler, Default_Handler
 
 .size vectors, .-vectors
 .global vectors
