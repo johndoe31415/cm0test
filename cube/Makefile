@@ -13,7 +13,7 @@ GDB := $(PREFIX)gdb
 
 CFLAGS := $(CFLAGS) -std=c11 -DSTM32G031xx
 CFLAGS += -Wall -Wmissing-prototypes -Wstrict-prototypes -Werror=implicit-function-declaration -Werror=format -Wimplicit-fallthrough -Wshadow
-CFLAGS += -Os -g3
+CFLAGS += -Os -ggdb3
 CFLAGS += -mcpu=cortex-m0 -mthumb
 CFLAGS += -I$(SUBDIR)/Drivers/CMSIS/Device/ST/STM32G0xx/Include -I$(SUBDIR)/Drivers/CMSIS/Include -I$(SUBDIR)/Drivers/CMSIS/Core/Include -I$(SUBDIR)/Drivers/STM32G0xx_HAL_Driver/Inc -I.
 CFLAGS += -ffunction-sections -fdata-sections

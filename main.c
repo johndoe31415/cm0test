@@ -23,7 +23,12 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stm32g0xx_hal_rcc.h>
 #include <stm32g0xx_hal_gpio.h>
+#include <stm32g0xx_hal_dma.h>
+#include <stm32g0xx_hal_tim.h>
+#include <stm32g0xx_ll_tim.h>
+#include <stm32g031xx.h>
 
 #include "main.h"
 

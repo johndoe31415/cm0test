@@ -17,9 +17,10 @@ STATICLIBS := cube/stm32cube.a
 
 CFLAGS := $(CFLAGS) -std=c11
 CFLAGS += -Wall -Wmissing-prototypes -Wstrict-prototypes -Werror=implicit-function-declaration -Werror=format -Wimplicit-fallthrough -Wshadow
-CFLAGS += -Os -g3
+#CFLAGS += -Os -gstabs
+CFLAGS += -Os -g3 -ggdb3
 CFLAGS += -mcpu=cortex-m0 -mthumb
-CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -ffunction-sections -fdata-sections -fno-eliminate-unused-debug-types
 #CFLAGS += -include stdperiph/configuration.h -Istdperiph/include -Istdperiph/system -Istdperiph/cmsis
 CFLAGS += -DSTM32G031xx -I cube/include -Icube/system -Icube/cmsis -Icube
 LDFLAGS := -T$(LDSCRIPT)
