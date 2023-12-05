@@ -66,16 +66,14 @@ static void init_gpio(void) {
 		};
 		HAL_GPIO_Init(GPIOA, &gpio_init_struct);
 	}
-
-	__HAL_RCC_GPIOB_CLK_ENABLE();
 	{
 		GPIO_InitTypeDef gpio_init_struct = {
-				.Pin = GPIO_PIN_7,
+				.Pin = GPIO_PIN_1,
 				.Mode = GPIO_MODE_INPUT,
 				.Speed = GPIO_SPEED_FREQ_HIGH,
 				.Pull = GPIO_PULLUP,
 		};
-		HAL_GPIO_Init(GPIOB, &gpio_init_struct);
+		HAL_GPIO_Init(GPIOA, &gpio_init_struct);
 	}
 }
 
